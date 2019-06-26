@@ -9,6 +9,8 @@
 import UIKit
 
 class ToDoViewController: UITableViewController {
+    
+    let defaults = UserDefaults.standard
 
     
     var itemArray = ["Oooga", "Yeetus the beetus", "Grain the brain"]
@@ -18,6 +20,9 @@ class ToDoViewController: UITableViewController {
         
         
         // Do any additional setup after loading the view.
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
     }
     
     
@@ -56,6 +61,10 @@ class ToDoViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
         
             self.itemArray.append(textEntered.text!)
+            
+            
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
                 self.tableView.reloadData()
             
